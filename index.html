@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pos">
+<head>
+    <title>Point of Sale | Practice Application</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Angular Scripts-->
+    <script src="app/js/angular.min.js"></script>
+    <script src="app/js/angular-filter.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.js"></script>-->
+    <!--Bootstrap-->
+    <script src="app/js/bootstrap.min.js"></script>
+
+    <!--App Modules and Controllers-->
+    <script src="app/app.js"></script>
+    <script src="app/controllers/controllers.js"></script>
+</head>
+<body>
+<link rel="stylesheet" href="app/css/bootstrap.css"/>
+<style type="text/css">
+    .btnProducts {
+        margin: 10px;
+        width: 225px;
+    }
+</style>
+
+<div class="container" ng-controller="posController as pc">
+    <h1>{{pc.mainHeading}}</h1>
+
+    <div class="row">
+        <!--Category Section-->
+        <div class="col-sm-2">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Category</h3></div>
+                <div class="panel-body">
+                    <span ng-repeat="cat in pc.category">
+                        <button class="btn btn-info form-control" ng-click="pc.onCategorySelect(cat.categoryName)">
+                            {{cat.categoryName}}
+                        </button><br/><br/>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!--Product Section-->
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Products</h3></div>
+                <div class="panel-body">
+                    <span class="text-danger h3" ng-show="pc.isCategorySelected('')">Select a category</span>
+
+                    <span ng-repeat="cat in pc.category">
+                        <button class="btn btn-lg btn-warning btnProducts"
+                                ng-show="pc.isCategorySelected(cat.categoryName)" ng-repeat="prod in cat.products"
+                                ng-click="pc.onProductSelect(prod)">
+                            {{prod.productName}}
+                        </button>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Bill Section-->
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Bill</h3></div>
+                <div class="panel-body">
+                    <!--Calculating sum of products group wise-->
+                    <div class="row" ng-repeat="(key,value) in pc.selectedProducts | groupBy:'productName'">
+                        <div class="col-sm-6">{{key}}</div>
+                        <div class="col-sm-2">x{{value.length}}</div>
+                        <div class="col-sm-4">Rs. {{value.sum("productCost")}}/-</div>
+                    </div>
+                </div>
+                <div class="panel-footer text-right h3">
+                    Grand Total : <b>Rs. {{pc.totalBill}}/-</b>
+                </div>
+            </div>
+            <button class="btn btn-success form-control" ng-click="pc.onCashOut()">Cash Out</button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
