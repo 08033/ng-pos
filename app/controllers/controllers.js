@@ -38,12 +38,8 @@ var posCtrl = app.controller('posController', function ($http) {
     };
 
     //Data from FoodPanda
-
     //Item-> Category[]->Product[]
-    $http.get("http://localhost:3080/api/items").then(function (response) {
-        //const names = response.data;
-        //console.log('response')
-        //console.log(response.data)
+    $http.get("http://localhost:3080/api/items").then(function (response) {        
         pos.category = response.data;
     })
 

@@ -46,9 +46,7 @@ async function findDocuments(collection) {
 
 app.get('/api/items', (req, res) => {
     DBItems().then(function (resp) {
-        const items = resp
-        //console.log('items');
-        //console.log(items);
+        const items = resp        
         res.json(items);
     });
     //res.json(DBItems());
