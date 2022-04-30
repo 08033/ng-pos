@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "nodemon ./api/server.js localhost 3080"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.0",
+    "mongodb": "^4.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

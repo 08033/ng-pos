@@ -1,7 +1,7 @@
 /**
  * Created by hassan.rizvi on 10/6/2016.
  */
-var posCtrl = app.controller('posController', [function () {
+var posCtrl = app.controller('posController', function ($http) {
     var pos = this;
 
     pos.mainHeading = 'Point of Sale';
@@ -11,7 +11,7 @@ var posCtrl = app.controller('posController', [function () {
 
     Array.prototype.sum = function (prop) {
         var total = 0
-        for ( var i = 0, _len = this.length; i < _len; i++ ) {
+        for (var i = 0, _len = this.length; i < _len; i++) {
             total += this[i][prop]
         }
         return total
@@ -38,52 +38,62 @@ var posCtrl = app.controller('posController', [function () {
     };
 
     //Data from FoodPanda
-    pos.category = [{
-        categoryName: 'Burgers',
-        products: [{productName: 'Zinger Burger', productCost: 260}, {
-            productName: 'Chicken Burger',
-            productCost: 200
-        }, {
-            productName: 'Beef Burger',
-            productCost: 250
-        }, {productName: 'Big Boss', productCost: 240}, {productName: '6 Incher', productCost: 210}]
-    },
+
+    //Item-> Category[]->Product[]
+    $http.get("http://localhost:3080/api/items").then(function (response) {
+        //const names = response.data;
+        //console.log('response')
+        //console.log(response.data)
+        pos.category = response.data;
+    })
+
+    /*pos.category =
+        [{
+            categoryName: 'Burgers',
+            products: [{ productName: 'Zinger Burger', productCost: 260 }, {
+                productName: 'Chicken Burger',
+                productCost: 200
+            }, {
+                productName: 'Beef Burger',
+                productCost: 250
+            }, { productName: 'Big Boss', productCost: 240 }, { productName: '6 Incher', productCost: 210 }]
+        },
         {
             categoryName: 'Gravy',
-            products: [{productName: 'Sweet & Sour', productCost: 224}, {
+            products: [{ productName: 'Sweet & Sour', productCost: 224 }, {
                 productName: 'Chicken Chilli',
                 productCost: 216
             }, {
                 productName: 'Chicken Shashlik',
                 productCost: 216
-            }, {productName: 'Chicken Jalfarezi', productCost: 224}, {productName: 'Beef Chilli', productCost: 224}]
+            }, { productName: 'Chicken Jalfarezi', productCost: 224 }, { productName: 'Beef Chilli', productCost: 224 }]
         }, {
             categoryName: 'Rice',
-            products: [{productName: 'Spice Special Fried Rice', productCost: 200}, {
+            products: [{ productName: 'Spice Special Fried Rice', productCost: 200 }, {
                 productName: 'Chicken Fried Rice',
                 productCost: 130
             }, {
                 productName: 'Garlic Fried Rice',
                 productCost: 120
-            }, {productName: 'Vegetable Fried Rice', productCost: 112}, {productName: 'Plain Rice', productCost: 80}]
+            }, { productName: 'Vegetable Fried Rice', productCost: 112 }, { productName: 'Plain Rice', productCost: 80 }]
         }, {
             categoryName: 'BBQ',
-            products: [{productName: 'Chicken Tikka', productCost: 120}, {
+            products: [{ productName: 'Chicken Tikka', productCost: 120 }, {
                 productName: 'Chicken Malai Boti',
                 productCost: 170
             }, {
                 productName: 'Chicken Reshmi Kabab',
                 productCost: 160
-            }, {productName: 'Beef Seekh Kabab', productCost: 160}]
+            }, { productName: 'Beef Seekh Kabab', productCost: 160 }]
         }, {
             categoryName: 'Drinks',
-            products: [{productName: 'Pepsi', productCost: 30}, {productName: 'CocoCola', productCost: 30}, {
+            products: [{ productName: 'Pepsi', productCost: 30 }, { productName: 'CocoCola', productCost: 30 }, {
                 productName: 'Sprite',
                 productCost: 30
-            }, {productName: 'Pakola', productCost: 30}, {productName: 'RedBull', productCost: 60}]
+            }, { productName: 'Pakola', productCost: 30 }, { productName: 'RedBull', productCost: 60 }]
         }, {
             categoryName: 'Salad',
-            products: [{productName: 'Russian Salad', productCost: 120}, {
+            products: [{ productName: 'Russian Salad', productCost: 120 }, {
                 productName: 'Chicken Pineapple Salad',
                 productCost: 120
             }, {
@@ -91,5 +101,6 @@ var posCtrl = app.controller('posController', [function () {
                 productCost: 30
             }]
         }];
+*/
 
-}]);
+});
