@@ -8,8 +8,11 @@ const app = express(),
     bodyParser = require("body-parser");
 port = 3080;
 
-const items = [];
+//const items = [];
 
+var path    = require("path");
+const dirname = process.cwd();
+app.use("/", express.static(path.join(dirname, 'app')));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -63,7 +66,7 @@ app.get('/api/items', (req, res) => {
 // });
 
 app.get('/', (req, res) => {
-    res.sendFile(process.cwd() + "/index.html")
+    res.sendFile(dirname + "/index.html")
 });
 
 app.listen(port, () => {
